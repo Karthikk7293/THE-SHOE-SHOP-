@@ -1,12 +1,16 @@
 const express = require ("express");
 const { route } = require("express/lib/application");
-const { registerUser, loginUser, logout, getAllUsers ,blockUser, unblockUser, forgotPassword, getUserDetails, updateUserPassword, updateUserProfile, getSingleUser, updateUserRole, DeleteUser } = require("../controllers/userController")
+const { registerUser, loginUser,otpGenerator,otpValidator, logout, getAllUsers ,blockUser, unblockUser, forgotPassword, getUserDetails, updateUserPassword, updateUserProfile, getSingleUser, updateUserRole, DeleteUser } = require("../controllers/userController")
 const { isAuthenticatedUser, authorisedRole } = require("../middleware/auth")
 const router = express.Router()
 
 router.route('/createUser').post(registerUser);
 
 router.route('/login').post(loginUser);
+
+router.route('/otp').post(otpGenerator);
+
+router.route('/varify-otp').post(otpValidator);
 
 router.route('/logout').get(logout);
 

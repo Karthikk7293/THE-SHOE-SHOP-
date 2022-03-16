@@ -18,10 +18,6 @@ const orderSchema = mongoose.Schema({
             type:Number,
             required:true
         },
-        phoneNo:{
-            type:Number,
-            required:true
-        },
     }],
     orderItems:[{
         name:{

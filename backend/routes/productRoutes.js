@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.route('/products').get(getAllProducts)
 
-router.route('/admin/products/new').post(isAuthenticatedUser,authorisedRole("admin"), createProduct)
+router.route('/admin/products/new').post(isAuthenticatedUser, authorisedRole("admin"), createProduct)
 
 router.route('/admin/products/:id')
     .put(isAuthenticatedUser,authorisedRole("admin"), updateProduct)
@@ -17,7 +17,7 @@ router.route('/product/:id').get(getProductDetials)
 
 router.route('/products/review').put(isAuthenticatedUser,createProductReview)
 
-router.route('/review').get(getProductReviews).delete(isAuthenticatedUser,DeleteReview)
+router.route('/review').get(getProductReviews).delete(isAuthenticatedUser,authorisedRole("admin"),DeleteReview)
 
 
 
