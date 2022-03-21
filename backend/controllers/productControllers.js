@@ -111,8 +111,8 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
     const { rating, comment, productId } = req.body;
     const review = {
-        user: req.user._id,
-        name: req.user.name,
+        user: req.user.avatar.url,
+        name: req.user.fname,
         rating: Number(rating),
         comment
     }

@@ -4,16 +4,17 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors');
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
+const morgan = require("morgan")
 
 const errorMiddleware = require('./middleware/error')
 
+app.use(morgan("dev"))
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
-
 //product routes
 const products = require('./routes/productRoutes')
 // user Routes

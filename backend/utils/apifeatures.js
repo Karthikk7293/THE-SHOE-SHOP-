@@ -40,7 +40,7 @@ class ApiFeatures {
           
          this.query = this.query.find(JSON.parse(queryStr))
 
-         console.log(queryStr);
+        // console.log(queryStr);
 
          return this;  
 

@@ -5,6 +5,7 @@ const sendToken = require("../utils/jwtToken");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const { generateAndSendOtp, validateOtp } = require("../utils/otpHandlers");
 const sendMail = require("../utils/sendMail");
+const cloudinary = require("cloudinary")
 
 // Register user
 
@@ -169,12 +170,27 @@ exports.updateUserPassword = catchAsyncError(async (req, res, next) => {
 // update user profile
 
 exports.updateUserProfile = catchAsyncError(async (req, res, next) => {
-  const newUserData = {
-    fname: req.body.name,
-    email: req.body.email,
-  };
-  // cloudinary will add
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+
+
+   
+      const result = await cloudinary.v2.uploader.upload( req.body.avatar, {
+        folder: "avatars",
+        width:200,
+        crop:"scale"
+
+      });
+     
+      let imagesLinks={
+        public_id: result.public_id,
+        url: result.secure_url,
+        
+      }
+       
+    req.body.avatar = imagesLinks;
+
+
+
+  const user = await User.findByIdAndUpdate(req.user.id,req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
