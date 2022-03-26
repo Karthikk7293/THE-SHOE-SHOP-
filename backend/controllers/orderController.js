@@ -84,6 +84,7 @@ exports.GetAllOrders = catchAsyncErrors(async(req,res,next)=>{
 
 exports.updateOrder = catchAsyncErrors(async(req,res,next)=>{
 
+   try {
     const order = await Order.findById(req.params.id);
 
     if(order.orderStatus === "Delivered") return next(new ErrorHandler("You Have Already Delivered This Order !",400))
@@ -97,6 +98,10 @@ exports.updateOrder = catchAsyncErrors(async(req,res,next)=>{
     if(req.body.status === "Delivered") order.deliveredAt = Date.now();
 
     await order.save({validateBeforeSave:false})
+       
+   } catch (error) {
+       console.log(error);
+   }
 
 
     res.status(200).json({
@@ -106,9 +111,10 @@ exports.updateOrder = catchAsyncErrors(async(req,res,next)=>{
 })
 
 
-async function updateStock(id,quantity){
+ const updateStock = async(id,quantity)=>{
 const product = await Product.findById(id)
 
+// console.log(id,quantity,"-------------------");
 product.stock -= quantity;
 
 await product.save({validateBeforeSave:false})
